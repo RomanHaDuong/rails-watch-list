@@ -1,9 +1,14 @@
 <div class="list-header" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= @list.movies.first&.poster_url || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba' %>)">
   <div class="container">
     <h1><%= @list.name %></h1>
-    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#newBookmarkModal">
-      <i class="fas fa-plus me-2"></i>Add a movie
-    </button>
+    <div class="d-flex gap-3">
+      <%= link_to lists_path, class: 'btn btn-outline-light' do %>
+        <i class="fas fa-arrow-left me-2"></i>Back
+      <% end %>
+      <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#newBookmarkModal">
+        <i class="fas fa-plus me-2"></i>Add a movie
+      </button>
+    </div>
   </div>
 </div>
 
@@ -16,7 +21,7 @@
           <h3><%= bookmark.movie.title %></h3>
           <p><%= bookmark.comment %></p>
           <%= link_to bookmark_path(bookmark),
-              data: { turbo_method: :delete, turbo_confirm: "Remove #{bookmark.movie.title}?" },
+              data: { turbo_method: :delete, turbo_confirm: "Remove #{bookmark.movie.title} from #{@list.name}?" },
               class: "btn btn-sm btn-danger mt-2" do %>
             <i class="fas fa-trash-alt"></i>
           <% end %>
