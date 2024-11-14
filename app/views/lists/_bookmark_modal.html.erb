@@ -1,0 +1,25 @@
+<div class="modal fade" id="newBookmarkModal" tabindex="-1" aria-labelledby="newBookmarkModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header border-bottom border-secondary">
+        <h5 class="modal-title" id="newBookmarkModalLabel">Add a movie to <%= @list.name %></h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for [@list, @bookmark] do |f| %>
+          <%= f.association :movie,
+              collection: Movie.all.order(:title),
+              prompt: "Select a movie",
+              input_html: { class: 'form-select bg-dark text-white' } %>
+          <%= f.input :comment,
+              placeholder: "Enter a comment (minimum 6 characters)",
+              input_html: {
+                class: 'bg-dark text-white',
+                style: 'color: white !important; ::placeholder { color: rgba(255,255,255,0.7) !important; }'
+              } %>
+          <%= f.submit "Add movie", class: "btn btn-primary w-100" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,24 @@
-<h1>Watchlists</h1>
-<ul>
-  <% @lists.each do |list| %>
-  <li>
-  <%= link_to list.name, list_path(list) %> <br>
-  </li>
-  <% end %>
-</ul>
+<div class="list-header" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://images.unsplash.com/photo-1489599849927-2ee91cede3ba)">
+  <div class="container">
+    <h1>My Movie Lists</h1>
+    <%= link_to new_list_path, class: "btn btn-light" do %>
+      <i class="fas fa-plus me-2"></i>Create new list
+    <% end %>
+  </div>
+</div>
 
-<%= link_to "Make a new list", new_list_path %>
+<div class="container py-5">
+  <div class="movie-grid">
+    <% @lists.each do |list| %>
+      <%= link_to list_path(list), class: "text-decoration-none" do %>
+        <div class="movie-card">
+          <%= image_tag list.movies.first&.poster_url || 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1', class: "movie-poster" %>
+          <div class="movie-info">
+            <h3><%= list.name %></h3>
+            <p><%= pluralize(list.movies.size, 'movie') %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

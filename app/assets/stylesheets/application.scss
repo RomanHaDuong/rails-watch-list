@@ -10,3 +10,25 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+body {
+  background-color: #141414;
+  color: white;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.btn-light {
+  background: rgba(255,255,255,0.1);
+  border: 2px solid white;
+  color: white;
+
+  &:hover {
+    background: white;
+    color: black;
+  }
+}

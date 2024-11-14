@@ -1,12 +1,29 @@
-<h1>List details</h1>
-<ul>
-  <%= @list.movies.each do |movie| %>
-  <li>
-    Title : <%= movie.title %><br>
-    Rating : <%= movie.rating %>
-  </li>
-  <% end %>
-</ul>
+<div class="list-header" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= @list.movies.first&.poster_url || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba' %>)">
+  <div class="container">
+    <h1><%= @list.name %></h1>
+    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#newBookmarkModal">
+      <i class="fas fa-plus me-2"></i>Add a movie
+    </button>
+  </div>
+</div>
 
-<%= render 'new_bookmark_form' %>
-<%= render 'homepage' %>
+<div class="container py-5">
+  <div class="movie-grid">
+    <% @list.bookmarks.each do |bookmark| %>
+      <div class="movie-card">
+        <%= image_tag bookmark.movie.poster_url, class: "movie-poster" %>
+        <div class="movie-info">
+          <h3><%= bookmark.movie.title %></h3>
+          <p><%= bookmark.comment %></p>
+          <%= link_to bookmark_path(bookmark),
+              data: { turbo_method: :delete, turbo_confirm: "Remove #{bookmark.movie.title}?" },
+              class: "btn btn-sm btn-danger mt-2" do %>
+            <i class="fas fa-trash-alt"></i>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render "bookmark_modal" %>
