@@ -8,21 +8,37 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 require 'open-uri'
+require 'json'
+
+puts "Cleaning database..."
+Bookmark.destroy_all
+List.destroy_all
 Movie.destroy_all
-# List.destroy_all
 
-# the Le Wagon copy of the API
-url = 'http://tmdb.lewagon.com/movie/top_rated'
-response = JSON.parse(URI.open(url).read)
+puts "Creating movies..."
+url = "http://tmdb.lewagon.com/movie/top_rated"
+response = URI.open(url).read
+data = JSON.parse(response)
 
-response['results'].each do |movie_hash|
-  puts
-  p movie_hash
-  # create an instance with the hash
+data["results"].each do |movie|
   Movie.create!(
-    poster_url: "https://image.tmdb.org/t/p/w500" + movie_hash['poster_path'],
-    rating: movie_hash['vote_average'],
-    title: movie_hash['title'],
-    overview: movie_hash['overview']
+    title: movie["title"],
+    overview: movie["overview"],
+    poster_url: "https://image.tmdb.org/t/p/w500#{movie["poster_path"]}",
+    rating: movie["vote_average"]
   )
 end
+
+puts "Creating lists..."
+["Action", "Comedy", "Drama", "Horror", "Sci-Fi"].each do |name|
+  list = List.create!(name: name)
+  3.times do
+    Bookmark.create!(
+      comment: ["Great movie!", "Must watch!", "Highly recommended!", "Classic!"].sample,
+      movie: Movie.all.sample,
+      list: list
+    )
+  end
+end
+
+puts "Finished!"
