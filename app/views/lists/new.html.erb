@@ -17,6 +17,7 @@
               },
               label_html: { class: 'text-white' } %>
           <div class="d-flex justify-content-between align-items-center mt-4">
+            <%= f.input :photo, as: :file %>
             <%= link_to lists_path, class: 'btn btn-outline-light' do %>
               <i class="fas fa-arrow-left me-2"></i>Back
             <% end %>
