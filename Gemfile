@@ -68,4 +68,4 @@ gem "sassc-rails"
 gem "dotenv-rails", groups: [ :development, :test ]
 
 # Gemfile
-gem "cloudinary", "~> 1.16.0"
+gem "cloudinary", "~> 2.2.0"
