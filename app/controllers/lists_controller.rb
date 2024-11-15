@@ -17,9 +17,13 @@ class ListsController < ApplicationController
     @list = List.new(list_params)
 
     if @list.save
-      redirect_to lists_path, notice: "List was successfully created."
+      begin
+        redirect_to list_path(@list), notice: "List was successfully created."
+      rescue => e
+        redirect_to lists_path, notice: "List was created but there was an issue loading it."
+      end
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
