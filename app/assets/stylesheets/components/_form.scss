@@ -29,3 +29,12 @@ input.bg-dark {
   }
   color: white !important;
 }
+
+.invalid-feedback {
+  color: #ff6b6b !important;
+}
+
+.form-control.is-invalid {
+  border-color: #ff6b6b !important;
+  background-image: none !important;
+}
