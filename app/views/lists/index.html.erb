@@ -12,7 +12,7 @@
     <% @lists.each do |list| %>
       <%= link_to list_path(list), class: "text-decoration-none" do %>
         <div class="movie-card">
-          <%= image_tag list.movies.first&.poster_url || 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1', class: "movie-poster" %>
+          <%= image_tag list.photo.attached? ? cl_image_path(list.photo.key) : (list.movies.first&.poster_url || 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1'), class: "movie-poster" %>
           <div class="movie-info">
             <h3><%= list.name %></h3>
             <p><%= pluralize(list.movies.size, 'movie') %></p>
