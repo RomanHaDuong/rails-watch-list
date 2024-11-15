@@ -17,11 +17,7 @@ class ListsController < ApplicationController
     @list = List.new(list_params)
 
     if @list.save
-      begin
-        redirect_to list_path(@list), notice: "List was successfully created."
-      rescue => e
-        redirect_to lists_path, notice: "List was created but there was an issue loading it."
-      end
+      redirect_to list_path(@list), notice: "List was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -30,7 +26,9 @@ class ListsController < ApplicationController
   def destroy
     @list = List.find(params[:id])
     if @list.destroy
-      redirect_to lists_path
+      redirect_to lists_path, notice: "List was successfully deleted."
+    else
+      redirect_to lists_path, alert: "There was an issue deleting the list."
     end
   end
 
