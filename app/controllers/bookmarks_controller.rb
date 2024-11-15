@@ -10,7 +10,10 @@ class BookmarksController < ApplicationController
     @bookmark.list = @list
 
     if @bookmark.save
-      redirect_to list_path(@list)
+      redirect_to list_path(@list), notice: 'Movie added successfully.'
+    else
+      @movies = Movie.all
+      render 'lists/show', status: :unprocessable_entity
     end
   end
 
@@ -18,7 +21,9 @@ class BookmarksController < ApplicationController
     @bookmark = Bookmark.find(params[:id])
     @list = @bookmark.list
     if @bookmark.destroy
-      redirect_to list_path(@list)
+      redirect_to list_path(@list), notice: 'Movie removed successfully.'
+    else
+      redirect_to list_path(@list), alert: 'Could not remove movie.'
     end
   end
 
